@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Password Manager</title>
+		<style>
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				min-height: 100vh;
+			}
+
+			.container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 20px;
+			}
+
+			.card {
+				background: white;
+				border-radius: 12px;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+				padding: 24px;
+				margin-bottom: 20px;
+			}
+
+			.btn {
+				padding: 12px 20px;
+				border: none;
+				border-radius: 8px;
+				cursor: pointer;
+				font-weight: 600;
+				transition: all 0.2s;
+				text-decoration: none;
+				display: inline-block;
+				text-align: center;
+			}
+
+			.btn:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+			}
+
+			.btn-primary {
+				background: #667eea;
+				color: white;
+			}
+
+			.btn-secondary {
+				background: #6c757d;
+				color: white;
+			}
+
+			.btn-danger {
+				background: #dc3545;
+				color: white;
+			}
+
+			.btn-success {
+				background: #28a745;
+				color: white;
+			}
+
+			.form-group {
+				margin-bottom: 20px;
+			}
+
+			.form-group label {
+				display: block;
+				margin-bottom: 8px;
+				font-weight: 600;
+				color: #333;
+			}
+
+			.form-control {
+				width: 100%;
+				padding: 12px;
+				border: 2px solid #e1e5e9;
+				border-radius: 8px;
+				font-size: 16px;
+				transition: border-color 0.2s;
+			}
+
+			.form-control:focus {
+				outline: none;
+				border-color: #667eea;
+			}
+
+			.password-item {
+				border: 1px solid #e1e5e9;
+				border-radius: 8px;
+				padding: 20px;
+				margin-bottom: 16px;
+				transition: all 0.2s;
+			}
+
+			.password-item:hover {
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+			}
+
+			.password-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 12px;
+			}
+
+			.password-title {
+				font-size: 18px;
+				font-weight: 600;
+				color: #333;
+			}
+
+			.password-website {
+				color: #667eea;
+				text-decoration: none;
+				font-size: 14px;
+			}
+
+			.password-actions {
+				display: flex;
+				gap: 8px;
+			}
+
+			.modal-overlay {
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: rgba(0, 0, 0, 0.5);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				z-index: 1000;
+			}
+
+			.modal {
+				background: white;
+				border-radius: 12px;
+				padding: 24px;
+				max-width: 500px;
+				width: 90%;
+				max-height: 80vh;
+				overflow-y: auto;
+			}
+
+			.modal-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 20px;
+			}
+
+			.modal-title {
+				font-size: 20px;
+				font-weight: 600;
+			}
+
+			.close-btn {
+				background: none;
+				border: none;
+				font-size: 24px;
+				cursor: pointer;
+				color: #6c757d;
+			}
+
+			.password-field {
+				position: relative;
+			}
+
+			.password-toggle {
+				position: absolute;
+				right: 12px;
+				top: 50%;
+				transform: translateY(-50%);
+				background: none;
+				border: none;
+				cursor: pointer;
+				color: #6c757d;
+			}
+
+			.header {
+				text-align: center;
+				margin-bottom: 40px;
+			}
+
+			.header h1 {
+				color: white;
+				font-size: 32px;
+				margin-bottom: 8px;
+			}
+
+			.header p {
+				color: rgba(255, 255, 255, 0.8);
+				font-size: 16px;
+			}
+
+			.loading {
+				text-align: center;
+				padding: 40px;
+				color: #6c757d;
+			}
+
+			.empty-state {
+				text-align: center;
+				padding: 40px;
+				color: #6c757d;
+			}
+
+			.generate-password {
+				display: flex;
+				gap: 12px;
+				align-items: center;
+			}
+
+			.checkbox-group {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+				margin-bottom: 16px;
+			}
+
+			.checkbox-item {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.search-box {
+				width: 100%;
+				padding: 12px;
+				border: 2px solid #e1e5e9;
+				border-radius: 8px;
+				font-size: 16px;
+				margin-bottom: 20px;
+			}
+
+			@media (max-width: 768px) {
+				.container {
+					padding: 10px;
+				}
+
+				.password-header {
+					flex-direction: column;
+					align-items: flex-start;
+				}
+
+				.password-actions {
+					margin-top: 12px;
+				}
+			}
+		</style>
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>
