@@ -3,7 +3,7 @@ default:
     just --list
 
 build:
-    npm run build
+    ORIGIN=http://localhost:5173 npm run build
 
 run:
     npm run dev
@@ -24,11 +24,12 @@ docker-build:
       --build-arg DATABASE_AUTH_TOKEN="$DATABASE_AUTH_TOKEN" .
     
 docker-run:
-    . ./.env
+    . ./.env && \
     docker run -d \
         -p 5173:5173 \
         -e DATABASE_URL=$DATABASE_URL \
         -e DATABASE_AUTH_TOKEN=$DATABASE_AUTH_TOKEN \
+        --env-file .env \
         --name svelte-password-manager \
         ranckosolutionsinc/svelte-password-manager:latest
 
