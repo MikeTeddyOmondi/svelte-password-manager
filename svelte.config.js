@@ -12,6 +12,9 @@ const config = {
 		adapter: adapter(),
 		experimental: {
 			remoteFunctions: true
+		},
+		prerender: {
+			entries: [] // Disable all prerendering
 		}
 	}
 };

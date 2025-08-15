@@ -6,7 +6,7 @@ import CryptoJS from 'crypto-js';
 import type { Password, GeneratePasswordOptions } from './types';
 
 // Database imports
-import { db, passwords as passwordsTable } from '$lib/db';
+import { db, passwords as passwordsTable } from '$lib/server/db';
 import { eq } from 'drizzle-orm';
 
 const MASTER_KEY = 'your-secure-master-key'; // In production, derive from user's master password

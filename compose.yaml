@@ -1,0 +1,13 @@
+name: 'svelte-password-manager'
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        - DATABASE_URL=${DATABASE_URL}
+        - DATABASE_AUTH_TOKEN=${DATABASE_AUTH_TOKEN}
+    image: ranckosolutionsinc/svelte-password-manager:latest
+    container_name: svelte-password-manager
+    ports:
+      - '5173:5173'
