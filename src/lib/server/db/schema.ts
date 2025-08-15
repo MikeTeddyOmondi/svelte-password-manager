@@ -1,5 +1,5 @@
 // src/lib/db/schema.ts
-import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 export const passwords = sqliteTable('passwords', {
 	id: text('id').primaryKey(),
