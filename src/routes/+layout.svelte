@@ -12,11 +12,15 @@
 
 <svelte:boundary>
 	{#snippet failed(error, reset)}
-		<button onclick={reset}>Oops! Try again</button>
+			<div class="flex min-h-screen w-full justify-center items-center">
+				<button class="btn btn-secondary" onclick={reset}>Oops! Try again</button>
+			</div>
 	{/snippet}
 
 	{#snippet pending()}
-		<p>loading...</p>
+		<div class="flex min-h-screen w-full justify-center items-center">
+			<p>loading...</p>
+		</div>
 	{/snippet}
 
 	{@render children()}

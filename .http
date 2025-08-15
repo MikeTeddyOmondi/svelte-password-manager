@@ -1,0 +1,17 @@
+@token = {{getToken.response.body.access_token}}
+
+### Get Access Token 
+### base64 encoded credentials: blZm0TbPGOiU9QGpwDSS2W5pOCojF3c9VGnS9BsAmAZHknYL:bf3dKSkRcse2mstN7MGa7sibQqDdnDXZlng6m61x3ZAa1FfRQN4OQZ6XGAEeW8Gr
+# @name getToken
+GET https://sbx.kra.go.ke/v1/token/generate?grant_type=client_credentials
+Authorization: Basic YmxabTBUYlBHT2lVOVFHcHdEU1MyVzVwT0NvakYzYzlWR25TOUJzQW1BWkhrbllMOmJmM2RLU2tSY3NlMm1zdE43TUdhN3NpYlFxRGRuRFhabG5nNm02MXgzWkFhMUZmUlFONE9RWjZYR0FFZVc4R3I=
+Content-Type: application/x-www-form-urlencoded
+
+### PIN Checker API - Docs @ https://developer.go.ke
+POST https://sbx.kra.go.ke/checker/v1/pinbypin
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "KRAPIN": "A012007601Z"
+}

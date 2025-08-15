@@ -38,7 +38,7 @@
 
 	// Generate initial password
 	$effect(() => {
-		handleGenerate();
+		// handleGenerate();
 	});
 </script>
 
